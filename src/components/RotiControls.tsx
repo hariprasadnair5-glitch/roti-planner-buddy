@@ -4,9 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ChefHat, Play, Square, RotateCw, Thermometer, Timer, Gauge } from 'lucide-react';
+import { ChefHat, Play, Square, RotateCw, Thermometer, Timer, Gauge, Sliders } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
+import rotiStack from "@/assets/roti-stack.jpg";
 
 interface RotiSettings {
   thickness: number;
@@ -85,10 +86,16 @@ const RotiControls = () => {
   return (
     <div className="space-y-6">
       {/* Manual Controls */}
-      <Card className="bg-gradient-to-br from-card via-card to-primary/5">
+      <Card className="relative overflow-hidden bg-gradient-to-br from-card via-card to-primary/5">
+        <div 
+          className="absolute top-0 left-0 w-24 h-24 bg-cover bg-center opacity-20 rounded-br-3xl"
+          style={{ backgroundImage: `url(${rotiStack})` }}
+        />
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <ChefHat className="h-5 w-5 text-primary" />
+          <CardTitle className="flex items-center gap-2 relative z-10">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <Sliders className="h-5 w-5 text-primary" />
+            </div>
             Manual Roti Controls
           </CardTitle>
         </CardHeader>

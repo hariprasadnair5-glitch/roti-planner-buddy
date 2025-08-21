@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Wifi, WifiOff, Thermometer, Clock, Settings, AlertCircle } from 'lucide-react';
+import { Wifi, WifiOff, Thermometer, Clock, Settings, AlertCircle, Cpu } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import rotimatiMachine from "@/assets/rotimatic-machine.jpg";
 
 interface ESP32Data {
   connected: boolean;
@@ -83,19 +84,21 @@ const ESP32Status = () => {
   return (
     <div className="space-y-6">
       {/* Connection Status */}
-      <Card className={`border-2 transition-colors duration-300 ${
+      <Card className={`relative overflow-hidden border-2 transition-colors duration-300 ${
         esp32Data.connected 
           ? 'border-primary/30 bg-gradient-to-br from-primary/5 to-primary-glow/10' 
           : 'border-destructive/30 bg-gradient-to-br from-destructive/5 to-destructive/10'
       }`}>
+        <div 
+          className="absolute bottom-0 right-0 w-40 h-32 bg-cover bg-center opacity-20 rounded-tl-3xl"
+          style={{ backgroundImage: `url(${rotimatiMachine})` }}
+        />
         <CardHeader>
-          <CardTitle className="flex items-center justify-between">
+          <CardTitle className="flex items-center justify-between relative z-10">
             <div className="flex items-center gap-2">
-              {esp32Data.connected ? (
-                <Wifi className="h-5 w-5 text-primary" />
-              ) : (
-                <WifiOff className="h-5 w-5 text-destructive" />
-              )}
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <Cpu className="h-5 w-5 text-primary" />
+              </div>
               ESP32 Board Status
             </div>
             <Badge variant={esp32Data.connected ? "default" : "destructive"}>

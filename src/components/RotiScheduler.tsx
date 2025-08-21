@@ -4,9 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Clock, Plus, Trash2, Play, Pause } from 'lucide-react';
+import { Clock, Plus, Trash2, Play, Pause, ChefHat } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
+import makingRoti from "@/assets/making-roti.jpg";
 
 interface MealSchedule {
   id: string;
@@ -101,10 +102,16 @@ const RotiScheduler = () => {
   return (
     <div className="space-y-6">
       {/* Add New Schedule */}
-      <Card className="border-border bg-gradient-to-br from-card via-card to-accent/30">
+      <Card className="relative overflow-hidden border-border bg-gradient-to-br from-card via-card to-accent/30">
+        <div 
+          className="absolute top-0 right-0 w-32 h-32 bg-cover bg-center opacity-20 rounded-bl-3xl"
+          style={{ backgroundImage: `url(${makingRoti})` }}
+        />
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Clock className="h-5 w-5 text-primary" />
+          <CardTitle className="flex items-center gap-2 relative z-10">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <ChefHat className="h-5 w-5 text-primary" />
+            </div>
             Schedule New Meal
           </CardTitle>
         </CardHeader>
@@ -169,22 +176,35 @@ const RotiScheduler = () => {
       </Card>
 
       {/* Current Schedules */}
-      <Card>
+      <Card className="bg-gradient-to-br from-card to-card/80">
         <CardHeader>
-          <CardTitle>Meal Schedule</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <Clock className="h-5 w-5 text-primary" />
+            </div>
+            Meal Schedule
+          </CardTitle>
         </CardHeader>
         <CardContent>
           {schedules.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground">
-              <Clock className="h-12 w-12 mx-auto mb-4 opacity-50" />
-              <p>No meals scheduled yet. Add your first meal above!</p>
+            <div className="text-center py-12 text-muted-foreground">
+              <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-accent/20 to-accent/10 rounded-full flex items-center justify-center">
+                <Clock className="h-12 w-12 opacity-50" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">No meals scheduled yet</h3>
+              <p>Add your first meal above to get started with automated roti making!</p>
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-4">
               {schedules.map((schedule) => (
-                <div key={schedule.id} className="flex items-center justify-between p-4 bg-accent/30 rounded-lg border border-border/50">
-                  <div className="flex items-center gap-4">
-                    <div className="font-medium text-lg">{schedule.time}</div>
+                <div key={schedule.id} className="group flex items-center justify-between p-6 bg-gradient-to-r from-accent/20 via-accent/10 to-transparent rounded-xl border border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-warm">
+                  <div className="flex items-center gap-6">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary-glow/20 rounded-full flex items-center justify-center">
+                        <Clock className="h-6 w-6 text-primary" />
+                      </div>
+                      <div className="font-bold text-xl text-foreground">{schedule.time}</div>
+                    </div>
                     <div className="flex gap-2">
                       <Badge variant="secondary">{schedule.quantity} rotis</Badge>
                       <Badge variant="outline">{schedule.thickness}</Badge>
